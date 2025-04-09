@@ -195,6 +195,12 @@ Page({
   
   // 切换模式
   switchMode(mode) {
+    // 检查是通过点击界面切换模式还是函数调用
+    if (typeof mode === 'object') {
+      // 如果是事件对象，则从dataset中获取mode
+      mode = mode.currentTarget.dataset.mode;
+    }
+    
     let minutes;
     switch (mode) {
       case 'work':
@@ -255,7 +261,7 @@ Page({
     }
   },
   
-  // 切换任务选择器显示
+  // 切换任务选择器
   toggleTaskSelector() {
     this.setData({
       showTaskSelector: !this.data.showTaskSelector
@@ -265,10 +271,10 @@ Page({
   // 选择任务
   selectTask(e) {
     const taskId = e.currentTarget.dataset.id;
-    const task = this.data.tasks.find(t => t.id === taskId);
+    const selectedTask = this.data.tasks.find(task => task.id === taskId);
     
     this.setData({
-      currentTask: task,
+      currentTask: selectedTask,
       showTaskSelector: false
     });
   },

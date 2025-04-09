@@ -4,60 +4,50 @@ page {
   display: flex;
   flex-direction: column;
   background-color: #F8F8F8;
+  width: 100%;
 }
 
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20rpx;
-}
-
-/* 深色模式样式 */
-.dark-mode {
-  background-color: #222;
-  color: #EEE;
-}
-
-.dark-mode .settings-section {
-  background-color: #333;
-}
-
-.dark-mode .section-title {
-  color: #DDD;
-}
-
-.dark-mode .setting-label {
-  color: #CCC;
+  padding: 15rpx;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* 设置区块样式 */
 .settings-section {
   background-color: #FFFFFF;
   border-radius: 16rpx;
-  margin-bottom: 30rpx;
-  padding: 30rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 25rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .section-title {
   font-size: 32rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 30rpx;
-  padding-bottom: 20rpx;
+  margin-bottom: 25rpx;
+  padding-bottom: 15rpx;
   border-bottom: 1rpx solid #F0F0F0;
+  width: 100%;
 }
 
 /* 设置项样式 */
 .setting-item {
-  margin-bottom: 40rpx;
+  margin-bottom: 30rpx;
+  width: 100%;
 }
 
 .setting-label {
   font-size: 28rpx;
   color: #666;
-  margin-bottom: 20rpx;
+  margin-bottom: 15rpx;
+  width: 100%;
 }
 
 .setting-control {
@@ -69,10 +59,12 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .switch-item .setting-label {
   margin-bottom: 0;
+  flex: 1;
 }
 
 .switch-item .setting-control {
@@ -82,16 +74,19 @@ page {
 /* 按钮项目样式 */
 .button-item {
   padding: 10rpx 0;
+  width: 100%;
 }
 
 .reset-button {
   background-color: #FF5252;
   color: #FFFFFF;
+  width: 100%;
 }
 
 .about-button {
   background-color: #E8593E;
   color: #FFFFFF;
+  width: 100%;
 }
 
 /* 重置确认对话框样式 */
@@ -116,12 +111,13 @@ page {
 }
 
 .reset-confirm-content {
-  width: 80%;
+  width: 85%;
   background-color: #FFFFFF;
   border-radius: 16rpx;
   padding: 40rpx;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
   z-index: 1001;
+  box-sizing: border-box;
 }
 
 .reset-confirm-title {
@@ -130,6 +126,7 @@ page {
   color: #333;
   margin-bottom: 30rpx;
   text-align: center;
+  width: 100%;
 }
 
 .reset-confirm-text {
@@ -138,15 +135,17 @@ page {
   margin-bottom: 40rpx;
   text-align: center;
   line-height: 1.6;
+  width: 100%;
 }
 
 .reset-confirm-buttons {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .cancel-btn, .confirm-btn {
-  width: 45%;
+  width: 48%;
   padding: 20rpx 0;
   text-align: center;
   border-radius: 12rpx;
@@ -190,163 +189,39 @@ page {
 
 .dark-mode .settings-section {
   background-color: #333;
+  border-color: #444;
 }
 
 .dark-mode .section-title {
   color: #DDD;
+  border-bottom-color: #444;
 }
 
 .dark-mode .setting-label {
   color: #CCC;
 }
 
-/* 设置区块样式 */
-.settings-section {
-  background-color: #FFFFFF;
-  border-radius: 16rpx;
-  margin-bottom: 30rpx;
-  padding: 30rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+.dark-mode .setting-item {
+  border-color: #444;
 }
 
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 30rpx;
-  padding-bottom: 20rpx;
-  border-bottom: 1rpx solid #F0F0F0;
+.dark-mode .reset-confirm-content {
+  background-color: #333;
 }
 
-/* 设置项样式 */
-.setting-item {
-  margin-bottom: 40rpx;
+.dark-mode .reset-confirm-title {
+  color: #EEE;
 }
 
-.setting-label {
-  font-size: 28rpx;
-  color: #666;
-  margin-bottom: 20rpx;
+.dark-mode .reset-confirm-text {
+  color: #CCC;
 }
 
-.setting-control {
-  width: 100%;
+.dark-mode .cancel-btn {
+  background-color: #444;
+  color: #DDD;
 }
 
-/* 开关项目样式 */
-.switch-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.switch-item .setting-label {
-  margin-bottom: 0;
-}
-
-.switch-item .setting-control {
-  width: auto;
-}
-
-/* 按钮项目样式 */
-.button-item {
-  padding: 10rpx 0;
-}
-
-.reset-button {
-  background-color: #FF5252;
-  color: #FFFFFF;
-}
-
-.about-button {
-  background-color: #E8593E;
-  color: #FFFFFF;
-}
-
-/* 重置确认对话框样式 */
-.reset-confirm {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s;
-}
-
-.reset-confirm.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.reset-confirm-content {
-  width: 80%;
-  background-color: #FFFFFF;
-  border-radius: 16rpx;
-  padding: 40rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-}
-
-.reset-confirm-title {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 30rpx;
-  text-align: center;
-}
-
-.reset-confirm-text {
-  font-size: 30rpx;
-  color: #666;
-  margin-bottom: 40rpx;
-  text-align: center;
-  line-height: 1.6;
-}
-
-.reset-confirm-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.cancel-btn, .confirm-btn {
-  width: 45%;
-  padding: 20rpx 0;
-  text-align: center;
-  border-radius: 12rpx;
-  font-size: 30rpx;
-}
-
-.cancel-btn {
-  background-color: #F5F5F5;
-  color: #666;
-}
-
-.confirm-btn {
-  background-color: #FF5252;
-  color: #FFFFFF;
-}
-
-/* 遮罩层 */
-.mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s;
-}
-
-.mask.show {
-  opacity: 1;
-  visibility: visible;
+.dark-mode button {
+  border: none;
 } 

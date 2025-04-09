@@ -4,23 +4,27 @@ page {
   display: flex;
   flex-direction: column;
   background-color: #F8F8F8;
+  width: 100%;
 }
 
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20rpx;
+  padding: 15rpx;
   box-sizing: border-box;
+  width: 100%;
 }
 
 /* 卡片通用样式 */
 .stats-card {
   background-color: #FFFFFF;
   border-radius: 16rpx;
-  margin-bottom: 30rpx;
-  padding: 30rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 25rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .card-title {
@@ -35,18 +39,22 @@ page {
 /* 概览卡片样式 */
 .summary-content {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 20rpx 0;
+  width: 100%;
 }
 
 .summary-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 33%;
+  padding: 0 10rpx;
+  box-sizing: border-box;
 }
 
 .summary-value {
-  font-size: 48rpx;
+  font-size: 46rpx;
   font-weight: bold;
   color: #E8593E;
   margin-bottom: 10rpx;
@@ -55,16 +63,20 @@ page {
 .summary-label {
   font-size: 26rpx;
   color: #666;
+  text-align: center;
+  width: 100%;
 }
 
 /* 视图切换样式 */
 .view-selector {
   display: flex;
   background-color: #FFFFFF;
-  margin-bottom: 30rpx;
+  margin-bottom: 25rpx;
   border-radius: 16rpx;
   overflow: hidden;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .view-tab {
@@ -74,16 +86,19 @@ page {
   font-size: 28rpx;
   color: #666;
   transition: all 0.3s;
+  position: relative;
 }
 
 .view-tab.active {
   background-color: #E8593E;
   color: #FFFFFF;
+  font-weight: bold;
 }
 
 /* 图表样式 */
 .chart {
   padding: 20rpx 0;
+  width: 100%;
 }
 
 .chart-container {
@@ -92,6 +107,8 @@ page {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .chart-columns {
@@ -99,32 +116,45 @@ page {
   justify-content: space-around;
   align-items: flex-end;
   height: 350rpx;
+  width: 100%;
+  min-width: 100%;
 }
 
 .chart-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 12%;
+  width: 14%;
+  min-width: 70rpx;
 }
 
 .column-value {
-  width: 100%;
+  width: 70%;
+  max-width: 50rpx;
   background-color: #E8593E;
   border-radius: 6rpx 6rpx 0 0;
   transition: height 0.5s;
+  box-shadow: 0 2rpx 6rpx rgba(232, 89, 62, 0.3);
 }
 
 .column-label {
   margin-top: 10rpx;
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #999;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 5rpx;
+  box-sizing: border-box;
 }
 
 .chart-legend {
   display: flex;
   justify-content: center;
   margin-top: 20rpx;
+  width: 100%;
 }
 
 .legend-item {
@@ -151,10 +181,12 @@ page {
   flex: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .history-list {
   flex: 1;
+  width: 100%;
 }
 
 .history-item {
@@ -162,6 +194,7 @@ page {
   justify-content: space-between;
   padding: 20rpx 0;
   border-bottom: 1rpx solid #F0F0F0;
+  width: 100%;
 }
 
 .history-date {
@@ -174,11 +207,14 @@ page {
   font-size: 28rpx;
   color: #E8593E;
   margin-right: 20rpx;
+  font-weight: bold;
 }
 
 .history-time {
   font-size: 28rpx;
   color: #666;
+  text-align: right;
+  min-width: 80rpx;
 }
 
 .no-data {
@@ -186,4 +222,5 @@ page {
   padding: 60rpx 0;
   color: #999;
   font-size: 28rpx;
+  width: 100%;
 } 

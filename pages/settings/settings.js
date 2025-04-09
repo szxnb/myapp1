@@ -37,6 +37,9 @@ Page({
       vibrationEnabled: settings.vibrationEnabled !== undefined ? settings.vibrationEnabled : true,
       darkMode: settings.darkMode || false
     });
+    
+    // 应用当前的深色模式设置
+    this.applyDarkModeSettings();
   },
 
   /**
@@ -132,19 +135,43 @@ Page({
   toggleDarkMode() {
     this.setData({
       darkMode: !this.data.darkMode
+    }, () => {
+      this.saveSettings();
+      this.applyDarkModeSettings();
     });
-    this.saveSettings();
+  },
+  
+  // 应用深色模式设置
+  applyDarkModeSettings() {
+    const { darkMode } = this.data;
     
-    // 应用深色模式（这里需要全局设置）
-    if (this.data.darkMode) {
-      wx.setNavigationBarColor({
-        frontColor: '#ffffff',
-        backgroundColor: '#333333'
+    // 设置导航栏颜色
+    wx.setNavigationBarColor({
+      frontColor: darkMode ? '#ffffff' : '#000000',
+      backgroundColor: darkMode ? '#333333' : '#ffffff',
+      animation: {
+        duration: 300,
+        timingFunc: 'easeIn'
+      }
+    });
+    
+    // 设置页面整体样式
+    const pages = getCurrentPages();
+    const currentPage = pages[pages.length - 1];
+    
+    if (darkMode) {
+      // 为页面添加深色模式类
+      currentPage.selectAllComponents('.container').forEach(component => {
+        component.setData({
+          darkMode: true
+        });
       });
     } else {
-      wx.setNavigationBarColor({
-        frontColor: '#000000',
-        backgroundColor: '#ffffff'
+      // 移除页面深色模式类
+      currentPage.selectAllComponents('.container').forEach(component => {
+        component.setData({
+          darkMode: false
+        });
       });
     }
   },
@@ -198,6 +225,9 @@ Page({
       darkMode: false,
       showResetConfirm: false
     });
+    
+    // 应用默认的深色模式设置（关闭）
+    this.applyDarkModeSettings();
     
     wx.showToast({
       title: '已重置所有数据',

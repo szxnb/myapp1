@@ -58,7 +58,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.loadStats();
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -128,7 +129,8 @@ Page({
       const dateStr = this.formatDate(date);
       
       dayLabels.push(this.formatDateLabel(date));
-      dayData.push((stats[dateStr] && stats[dateStr].completed) || 0);
+      const completedCount = (stats[dateStr] && stats[dateStr].completed) || 0;
+      dayData.push(completedCount);
     }
     
     this.setData({ dayLabels, dayData });
@@ -136,30 +138,89 @@ Page({
   
   // 生成周数据
   generateWeekData() {
-    // 这里简化处理，使用随机数据
-    const weekLabels = ['第1周', '第2周', '第3周', '第4周'];
-    const weekData = [
-      Math.floor(Math.random() * 20 + 5),
-      Math.floor(Math.random() * 20 + 5),
-      Math.floor(Math.random() * 20 + 5),
-      Math.floor(Math.random() * 20 + 5)
-    ];
+    const { stats } = this.data;
+    const weekLabels = [];
+    const weekData = [];
+    
+    // 获取当前日期
+    const today = new Date();
+    
+    // 计算当前周的起始日期
+    const currentWeekStart = new Date(today);
+    const dayOfWeek = today.getDay() || 7; // 如果是周日(0)，转为7
+    currentWeekStart.setDate(today.getDate() - dayOfWeek + 1); // 设置为本周的周一
+    
+    // 获取过去4周的数据
+    for (let i = 3; i >= 0; i--) {
+      // 计算每周的开始日期（周一）
+      const weekStart = new Date(currentWeekStart);
+      weekStart.setDate(currentWeekStart.getDate() - (i * 7));
+      
+      // 计算周结束日期（周日）
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      
+      // 周标签
+      const weekLabel = `${this.formatDateLabel(weekStart)}-${this.formatDateLabel(weekEnd)}`;
+      weekLabels.push(weekLabel);
+      
+      // 计算这一周的总番茄数
+      let weekTotal = 0;
+      
+      // 计算周内每天的番茄数
+      for (let j = 0; j < 7; j++) {
+        const date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + j);
+        const dateStr = this.formatDate(date);
+        
+        weekTotal += (stats[dateStr] && stats[dateStr].completed) || 0;
+      }
+      
+      weekData.push(weekTotal);
+    }
     
     this.setData({ weekLabels, weekData });
   },
   
   // 生成月数据
   generateMonthData() {
-    // 这里简化处理，使用随机数据
-    const monthLabels = ['1月', '2月', '3月', '4月', '5月', '6月'];
-    const monthData = [
-      Math.floor(Math.random() * 50 + 10),
-      Math.floor(Math.random() * 50 + 10),
-      Math.floor(Math.random() * 50 + 10),
-      Math.floor(Math.random() * 50 + 10),
-      Math.floor(Math.random() * 50 + 10),
-      Math.floor(Math.random() * 50 + 10)
-    ];
+    const { stats } = this.data;
+    const monthLabels = [];
+    const monthData = [];
+    
+    // 获取当前日期
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    
+    // 获取过去6个月的数据
+    for (let i = 5; i >= 0; i--) {
+      // 计算月份和年份
+      let month = currentMonth - i;
+      let year = currentYear;
+      
+      if (month < 0) {
+        month += 12;
+        year -= 1;
+      }
+      
+      // 月标签
+      const monthLabel = `${month + 1}月`;
+      monthLabels.push(monthLabel);
+      
+      // 计算这个月的总番茄数
+      let monthTotal = 0;
+      
+      // 遍历所有记录，找出属于这个月的记录
+      Object.keys(stats).forEach(dateStr => {
+        const date = new Date(dateStr);
+        if (date.getFullYear() === year && date.getMonth() === month) {
+          monthTotal += stats[dateStr].completed || 0;
+        }
+      });
+      
+      monthData.push(monthTotal);
+    }
     
     this.setData({ monthLabels, monthData });
   },

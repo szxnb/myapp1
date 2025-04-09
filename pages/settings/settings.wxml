@@ -7,21 +7,21 @@
     <view class="setting-item">
       <view class="setting-label">工作时长 (分钟)</view>
       <view class="setting-control">
-        <slider min="1" max="60" value="{{workTime}}" show-value bindchange="onWorkTimeChange" activeColor="#E8593E" block-color="#E8593E"/>
+        <slider min="1" max="60" value="{{workTime}}" show-value bindchange="onWorkTimeChange" activeColor="#E8593E" block-color="#E8593E" block-size="25"/>
       </view>
     </view>
     
     <view class="setting-item">
       <view class="setting-label">短休息时长 (分钟)</view>
       <view class="setting-control">
-        <slider min="1" max="30" value="{{shortBreakTime}}" show-value bindchange="onShortBreakTimeChange" activeColor="#E8593E" block-color="#E8593E"/>
+        <slider min="1" max="30" value="{{shortBreakTime}}" show-value bindchange="onShortBreakTimeChange" activeColor="#E8593E" block-color="#E8593E" block-size="25"/>
       </view>
     </view>
     
     <view class="setting-item">
       <view class="setting-label">长休息时长 (分钟)</view>
       <view class="setting-control">
-        <slider min="5" max="60" value="{{longBreakTime}}" show-value bindchange="onLongBreakTimeChange" activeColor="#E8593E" block-color="#E8593E"/>
+        <slider min="5" max="60" value="{{longBreakTime}}" show-value bindchange="onLongBreakTimeChange" activeColor="#E8593E" block-color="#E8593E" block-size="25"/>
       </view>
     </view>
   </view>
