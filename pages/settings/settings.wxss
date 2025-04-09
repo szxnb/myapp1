@@ -77,6 +77,20 @@ page {
   width: 100%;
 }
 
+.save-button {
+  background-color: #E8593E;
+  color: #FFFFFF;
+  width: 100%;
+  margin-top: 20rpx;
+  font-weight: bold;
+  white-space: nowrap;
+  font-size: 28rpx;
+}
+
+.save-button:active {
+  background-color: #d24c36;
+}
+
 .reset-button {
   background-color: #FF5252;
   color: #FFFFFF;

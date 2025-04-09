@@ -18,7 +18,10 @@ Page({
     darkMode: false,
     
     // 重置确认
-    showResetConfirm: false
+    showResetConfirm: false,
+    
+    // 设置是否已修改（避免频繁保存相同设置）
+    settingsModified: false
   },
 
   /**
@@ -35,7 +38,8 @@ Page({
       longBreakTime: settings.longBreakTime || 15,
       soundEnabled: settings.soundEnabled !== undefined ? settings.soundEnabled : true,
       vibrationEnabled: settings.vibrationEnabled !== undefined ? settings.vibrationEnabled : true,
-      darkMode: settings.darkMode || false
+      darkMode: settings.darkMode || false,
+      settingsModified: false
     });
     
     // 应用当前的深色模式设置
@@ -94,25 +98,25 @@ Page({
   // 更新工作时间
   onWorkTimeChange(e) {
     this.setData({
-      workTime: Number(e.detail.value)
+      workTime: Number(e.detail.value),
+      settingsModified: true
     });
-    this.saveSettings();
   },
   
   // 更新短休息时间
   onShortBreakTimeChange(e) {
     this.setData({
-      shortBreakTime: Number(e.detail.value)
+      shortBreakTime: Number(e.detail.value),
+      settingsModified: true
     });
-    this.saveSettings();
   },
   
   // 更新长休息时间
   onLongBreakTimeChange(e) {
     this.setData({
-      longBreakTime: Number(e.detail.value)
+      longBreakTime: Number(e.detail.value),
+      settingsModified: true
     });
-    this.saveSettings();
   },
   
   // 切换声音开关
@@ -189,11 +193,48 @@ Page({
       darkMode
     });
     
+    this.setData({
+      settingsModified: false
+    });
+    
     wx.showToast({
       title: '设置已保存',
       icon: 'success',
       duration: 1000
     });
+  },
+  
+  // 保存并立即应用时间设置（用于保存按钮）
+  saveAndApplySettings() {
+    // 如果设置没有修改，无需保存
+    if (!this.data.settingsModified) {
+      wx.showToast({
+        title: '无设置变更',
+        icon: 'none',
+        duration: 1000
+      });
+      return;
+    }
+    
+    // 先保存设置
+    this.saveSettings();
+    
+    // 标记需要强制刷新计时器
+    wx.setStorageSync('_settingsUpdatedTimestamp', new Date().getTime());
+    
+    // 显示成功提示
+    wx.showToast({
+      title: '设置已应用',
+      icon: 'success',
+      duration: 1500
+    });
+    
+    // 返回到首页并强制刷新
+    setTimeout(() => {
+      wx.reLaunch({
+        url: '/pages/index/index'
+      });
+    }, 1000);
   },
   
   // 显示重置确认对话框
@@ -223,7 +264,8 @@ Page({
       soundEnabled: true,
       vibrationEnabled: true,
       darkMode: false,
-      showResetConfirm: false
+      showResetConfirm: false,
+      settingsModified: true
     });
     
     // 应用默认的深色模式设置（关闭）

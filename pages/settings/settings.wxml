@@ -24,6 +24,10 @@
         <slider min="5" max="60" value="{{longBreakTime}}" show-value bindchange="onLongBreakTimeChange" activeColor="#E8593E" block-color="#E8593E" block-size="25"/>
       </view>
     </view>
+    
+    <view class="button-item">
+      <button class="save-button" bindtap="saveAndApplySettings">保存并应用</button>
+    </view>
   </view>
   
   <view class="settings-section">

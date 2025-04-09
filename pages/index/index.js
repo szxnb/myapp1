@@ -31,13 +31,17 @@ Page({
     showTaskSelector: false,
     
     // 任务列表示例数据
-    tasks: []
+    tasks: [],
+    
+    // 上次设置更新时间戳
+    lastSettingsUpdate: 0
   },
 
   onLoad() {
     // 初始化，从本地存储加载任务和设置
     const tasks = wx.getStorageSync('tasks') || [];
     const settings = wx.getStorageSync('settings') || {};
+    const lastSettingsUpdate = wx.getStorageSync('_settingsUpdatedTimestamp') || 0;
     
     // 更新默认设置
     if (settings.workTime) {
@@ -47,6 +51,7 @@ Page({
         longBreakTime: settings.longBreakTime || 15,
         currentTime: settings.workTime * 60,
         displayMinutes: String(settings.workTime).padStart(2, '0'),
+        lastSettingsUpdate
       });
     }
     
@@ -60,6 +65,100 @@ Page({
     this.setData({
       completedPomodoros: todayStats.completed
     });
+  },
+  
+  // 每次页面显示时执行
+  onShow() {
+    // 重新加载设置
+    const settings = wx.getStorageSync('settings') || {};
+    const currentSettingsUpdate = wx.getStorageSync('_settingsUpdatedTimestamp') || 0;
+    
+    // 检查设置是否已被更新（通过时间戳比较）
+    const settingsUpdated = currentSettingsUpdate > this.data.lastSettingsUpdate;
+    
+    if (settings.workTime) {
+      // 获取当前正在运行的模式
+      const { currentMode, timerStatus } = this.data;
+      
+      // 更新设置值
+      this.setData({
+        workTime: settings.workTime,
+        shortBreakTime: settings.shortBreakTime || 5,
+        longBreakTime: settings.longBreakTime || 15,
+        lastSettingsUpdate: currentSettingsUpdate
+      });
+      
+      // 如果设置已更新或计时器未运行，则更新当前显示的时间
+      if (settingsUpdated || timerStatus !== 'running') {
+        console.log('Settings updated, applying new timer settings...');
+        
+        // 如果设置刚刚被更新且计时器未运行，立即重置计时器
+        if (settingsUpdated && timerStatus !== 'running') {
+          this.resetTimer();
+        } 
+        // 如果设置被更新但计时器正在运行，提示用户
+        else if (settingsUpdated && timerStatus === 'running') {
+          wx.showToast({
+            title: '新设置将在计时结束后生效',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+        // 如果只是普通的页面显示且计时器未运行，正常更新显示
+        else if (timerStatus !== 'running') {
+          // 根据当前模式设置正确的时间
+          let minutes;
+          if (currentMode === 'work') {
+            minutes = settings.workTime;
+          } else if (currentMode === 'shortBreak') {
+            minutes = settings.shortBreakTime || 5;
+          } else if (currentMode === 'longBreak') {
+            minutes = settings.longBreakTime || 15;
+          }
+          
+          // 更新显示时间
+          this.setData({
+            currentTime: minutes * 60,
+            displayMinutes: String(minutes).padStart(2, '0'),
+            displaySeconds: '00'
+          });
+        }
+      }
+    }
+    
+    // 重新加载任务
+    const tasks = wx.getStorageSync('tasks') || [];
+    this.setData({ tasks });
+  },
+  
+  // 从设置页面直接更新计时器设置
+  updateTimerSettings() {
+    // 读取最新设置
+    const settings = wx.getStorageSync('settings') || {};
+    
+    if (!settings.workTime) return;
+    
+    // 获取当前正在运行的模式
+    const { currentMode, timerStatus } = this.data;
+    
+    // 更新设置值
+    this.setData({
+      workTime: settings.workTime,
+      shortBreakTime: settings.shortBreakTime || 5,
+      longBreakTime: settings.longBreakTime || 15
+    });
+    
+    // 如果计时器未运行，则更新当前显示的时间并立即重置计时器
+    if (timerStatus !== 'running') {
+      this.resetTimer();
+    } else {
+      // 如果计时器正在运行，显示提示
+      wx.showToast({
+        title: '计时结束后生效',
+        icon: 'none',
+        duration: 2000
+      });
+    }
   },
   
   // 开始计时器
