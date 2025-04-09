@@ -1,0 +1,112 @@
+<!--pages/statistics/statistics.wxml-->
+<navigation-bar title="统计" back="{{false}}" color="white" background="#E8593E"></navigation-bar>
+<view class="container">
+  <!-- 概览卡片 -->
+  <view class="stats-card summary-card">
+    <view class="card-title">总览</view>
+    <view class="summary-content">
+      <view class="summary-item">
+        <view class="summary-value">{{totalPomodoros}}</view>
+        <view class="summary-label">总番茄数</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{totalWorkTime}}</view>
+        <view class="summary-label">总时长(分钟)</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{avgPomodorosPerDay}}</view>
+        <view class="summary-label">日均番茄</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 视图切换 -->
+  <view class="view-selector">
+    <view class="view-tab {{currentView === 'day' ? 'active' : ''}}" bindtap="switchView" data-view="day">日</view>
+    <view class="view-tab {{currentView === 'week' ? 'active' : ''}}" bindtap="switchView" data-view="week">周</view>
+    <view class="view-tab {{currentView === 'month' ? 'active' : ''}}" bindtap="switchView" data-view="month">月</view>
+  </view>
+  
+  <!-- 图表区域 -->
+  <view class="stats-card chart-card">
+    <view class="card-title">
+      {{currentView === 'day' ? '日视图' : currentView === 'week' ? '周视图' : '月视图'}}
+    </view>
+    
+    <!-- 日视图 -->
+    <view class="chart" wx:if="{{currentView === 'day'}}">
+      <view class="chart-container">
+        <view class="chart-columns">
+          <view class="chart-column" wx:for="{{dayData}}" wx:key="index">
+            <view class="column-value" style="height: {{item * 5}}rpx; min-height: 10rpx;"></view>
+            <view class="column-label">{{dayLabels[index]}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="chart-legend">
+        <view class="legend-item">
+          <view class="legend-color"></view>
+          <view class="legend-label">番茄数量</view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 周视图 -->
+    <view class="chart" wx:if="{{currentView === 'week'}}">
+      <view class="chart-container">
+        <view class="chart-columns">
+          <view class="chart-column" wx:for="{{weekData}}" wx:key="index">
+            <view class="column-value" style="height: {{item * 4}}rpx; min-height: 10rpx;"></view>
+            <view class="column-label">{{weekLabels[index]}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="chart-legend">
+        <view class="legend-item">
+          <view class="legend-color"></view>
+          <view class="legend-label">番茄数量</view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 月视图 -->
+    <view class="chart" wx:if="{{currentView === 'month'}}">
+      <view class="chart-container">
+        <view class="chart-columns">
+          <view class="chart-column" wx:for="{{monthData}}" wx:key="index">
+            <view class="column-value" style="height: {{item * 3}}rpx; min-height: 10rpx;"></view>
+            <view class="column-label">{{monthLabels[index]}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="chart-legend">
+        <view class="legend-item">
+          <view class="legend-color"></view>
+          <view class="legend-label">番茄数量</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 历史卡片 -->
+  <view class="stats-card history-card">
+    <view class="card-title">详细历史</view>
+    <scroll-view class="history-list" scroll-y>
+      <block wx:if="{{Object.keys(stats).length > 0}}">
+        <view 
+          wx:for="{{Object.entries(stats)}}" 
+          wx:for-item="stat" 
+          wx:key="index" 
+          class="history-item"
+        >
+          <view class="history-date">{{stat[0]}}</view>
+          <view class="history-value">{{stat[1].completed}} 番茄</view>
+          <view class="history-time">{{stat[1].totalWorkTime || 0}} 分钟</view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="no-data">暂无历史数据</view>
+      </block>
+    </scroll-view>
+  </view>
+</view>

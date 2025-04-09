@@ -1,7 +1,84 @@
 <!--index.wxml-->
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    Weixin
+<navigation-bar title="番茄时钟" back="{{false}}" color="white" background="#E8593E"></navigation-bar>
+<view class="container">
+  <!-- 模式选择器 -->
+  <view class="mode-selector">
+    <view class="mode-btn {{currentMode === 'work' ? 'active' : ''}}" bindtap="switchMode" data-mode="work">工作</view>
+    <view class="mode-btn {{currentMode === 'shortBreak' ? 'active' : ''}}" bindtap="switchMode" data-mode="shortBreak">短休息</view>
+    <view class="mode-btn {{currentMode === 'longBreak' ? 'active' : ''}}" bindtap="switchMode" data-mode="longBreak">长休息</view>
   </view>
-</scroll-view>
+  
+  <!-- 当前任务 -->
+  <view class="current-task" bindtap="toggleTaskSelector">
+    <text class="task-label">当前任务:</text>
+    <text class="task-name">{{currentTask ? currentTask.title : '点击选择任务'}}</text>
+  </view>
+  
+  <!-- 计时器主体 -->
+  <view class="timer">
+    <view class="timer-progress" style="background: conic-gradient(#E8593E {{progress * 360}}deg, #f8f8f8 0deg);">
+      <view class="timer-inner">
+        <text class="timer-display">{{displayMinutes}}:{{displaySeconds}}</text>
+        <text class="timer-mode">{{currentMode === 'work' ? '工作时间' : currentMode === 'shortBreak' ? '短休息' : '长休息'}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 控制按钮 -->
+  <view class="controls">
+    <view class="control-btn reset" bindtap="resetTimer" style="display:flex; flex-direction:column;">
+      <text style="font-size:40rpx; margin-bottom:10rpx;">↺</text>
+      <text style="font-size:24rpx;">重置</text>
+    </view>
+    
+    <block wx:if="{{timerStatus !== 'running'}}">
+      <view class="control-btn start" bindtap="startTimer" style="display:flex; flex-direction:column;">
+        <text style="font-size:40rpx; margin-bottom:10rpx;">►</text>
+        <text style="font-size:24rpx;">开始</text>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="control-btn pause" bindtap="pauseTimer" style="display:flex; flex-direction:column;">
+        <text style="font-size:40rpx; margin-bottom:10rpx;">❚❚</text>
+        <text style="font-size:24rpx;">暂停</text>
+      </view>
+    </block>
+  </view>
+  
+  <!-- 番茄统计 -->
+  <view class="pomodoro-counter">
+    <text>今日完成: {{completedPomodoros}} 番茄</text>
+  </view>
+  
+  <!-- 任务选择器弹窗 -->
+  <view class="task-selector {{showTaskSelector ? 'show' : ''}}">
+    <view class="task-selector-header">
+      <text>选择任务</text>
+      <view class="close-btn" bindtap="toggleTaskSelector">×</view>
+    </view>
+    
+    <scroll-view scroll-y class="task-list">
+      <block wx:if="{{tasks.length > 0}}">
+        <view 
+          wx:for="{{tasks}}" 
+          wx:key="id" 
+          class="task-item {{item.completed ? 'completed' : ''}}" 
+          bindtap="selectTask" 
+          data-id="{{item.id}}"
+        >
+          <text class="task-title">{{item.title}}</text>
+          <text class="task-pomodoros">{{item.completedPomodoros}}/{{item.estimatedPomodoros}}</text>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="no-tasks">
+          <text>没有可用的任务</text>
+          <view class="add-task-btn" bindtap="navigateToTasks">添加任务</view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+  
+  <!-- 遮罩层 -->
+  <view class="mask {{showTaskSelector ? 'show' : ''}}" bindtap="toggleTaskSelector"></view>
+</view>

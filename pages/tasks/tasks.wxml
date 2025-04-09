@@ -1,0 +1,130 @@
+<!--tasks.wxml-->
+<navigation-bar title="任务管理" back="{{false}}" color="white" background="#E8593E"></navigation-bar>
+<view class="container">
+  <!-- 过滤器 -->
+  <view class="filters">
+    <view 
+      class="filter {{filters.all ? 'active' : ''}}" 
+      bindtap="setFilter" 
+      data-filter="all"
+    >全部</view>
+    <view 
+      class="filter {{filters.active ? 'active' : ''}}" 
+      bindtap="setFilter" 
+      data-filter="active"
+    >未完成</view>
+    <view 
+      class="filter {{filters.completed ? 'active' : ''}}" 
+      bindtap="setFilter" 
+      data-filter="completed"
+    >已完成</view>
+  </view>
+  
+  <!-- 任务列表 -->
+  <scroll-view class="task-list" scroll-y>
+    <block wx:if="{{tasks.length > 0}}">
+      <view 
+        wx:for="{{tasks}}" 
+        wx:key="id" 
+        class="task-item {{item.completed ? 'completed' : ''}} priority-{{item.priority || 'medium'}}"
+        wx:if="{{filters.all || (filters.active && !item.completed) || (filters.completed && item.completed)}}"
+      >
+        <view class="task-content">
+          <view class="checkbox" bindtap="toggleTaskCompleted" data-id="{{item.id}}">
+            <icon wx:if="{{item.completed}}" type="success" size="20" color="#52c41a" />
+            <view wx:else class="checkbox-empty"></view>
+          </view>
+          <view class="task-details">
+            <view class="task-title">{{item.title}}</view>
+            <view class="task-info">
+              <text class="task-priority">优先级: {{item.priority === 'high' ? '高' : (item.priority === 'low' ? '低' : '中')}}</text>
+              <text class="task-pomodoros">预计番茄数: {{item.estimatedPomodoros}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="task-actions">
+          <view class="action edit" bindtap="editTask" data-id="{{item.id}}">
+            <icon type="info" size="20" />
+          </view>
+          <view class="action delete" bindtap="deleteTask" data-id="{{item.id}}">
+            <icon type="cancel" size="20" />
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <block wx:else>
+      <view class="empty-state">
+        <text>暂无任务</text>
+        <text>点击下方按钮添加新任务</text>
+      </view>
+    </block>
+
+    <!-- 已完成任务清除按钮 -->
+    <view class="clear-completed" wx:if="{{completedTasksCount > 0}}">
+      <button class="clear-btn" bindtap="clearCompletedTasks">清除已完成任务</button>
+    </view>
+  </scroll-view>
+  
+  <!-- 添加任务按钮 -->
+  <view class="add-task-button" bindtap="toggleAddTaskForm">
+    <text class="add-icon">+</text>
+  </view>
+  
+  <!-- 添加/编辑任务表单 -->
+  <view class="task-form-container {{showAddTaskForm ? 'show' : ''}}">
+    <view class="task-form">
+      <view class="form-header">
+        <text>{{editingTaskId ? '编辑任务' : '添加新任务'}}</text>
+        <view class="close-btn" bindtap="toggleAddTaskForm">×</view>
+      </view>
+      
+      <view class="form-content">
+        <view class="form-item">
+          <text class="form-label">任务名称:</text>
+          <input class="form-input" value="{{newTaskTitle}}" bindinput="onNewTaskTitleInput" placeholder="输入任务名称"/>
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">预估番茄数:</text>
+          <slider class="form-slider" min="1" max="10" value="{{newTaskEstimatedPomodoros}}" show-value bindchange="onEstimatedPomodorosChange"/>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">优先级:</text>
+          <view class="priority-selector">
+            <view 
+              class="priority-option {{newTaskPriority === 'low' ? 'active' : ''}}" 
+              bindtap="setTaskPriority" 
+              data-priority="low"
+            >
+              低
+            </view>
+            <view 
+              class="priority-option {{newTaskPriority === 'medium' ? 'active' : ''}}" 
+              bindtap="setTaskPriority" 
+              data-priority="medium"
+            >
+              中
+            </view>
+            <view 
+              class="priority-option {{newTaskPriority === 'high' ? 'active' : ''}}" 
+              bindtap="setTaskPriority" 
+              data-priority="high"
+            >
+              高
+            </view>
+          </view>
+        </view>
+        
+        <view class="form-actions">
+          <button class="cancel-btn" bindtap="toggleAddTaskForm">取消</button>
+          <button class="submit-btn" bindtap="submitTask">{{editingTaskId ? '更新' : '添加'}}</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 遮罩层 -->
+  <view class="mask {{showAddTaskForm ? 'show' : ''}}" bindtap="toggleAddTaskForm"></view>
+</view> 

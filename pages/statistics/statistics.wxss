@@ -1,0 +1,189 @@
+/* pages/statistics/statistics.wxss */
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #F8F8F8;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 卡片通用样式 */
+.stats-card {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+/* 概览卡片样式 */
+.summary-content {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #E8593E;
+  margin-bottom: 10rpx;
+}
+
+.summary-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 视图切换样式 */
+.view-selector {
+  display: flex;
+  background-color: #FFFFFF;
+  margin-bottom: 30rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.view-tab {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.view-tab.active {
+  background-color: #E8593E;
+  color: #FFFFFF;
+}
+
+/* 图表样式 */
+.chart {
+  padding: 20rpx 0;
+}
+
+.chart-container {
+  height: 400rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chart-columns {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 350rpx;
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 12%;
+}
+
+.column-value {
+  width: 100%;
+  background-color: #E8593E;
+  border-radius: 6rpx 6rpx 0 0;
+  transition: height 0.5s;
+}
+
+.column-label {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 0 15rpx;
+}
+
+.legend-color {
+  width: 24rpx;
+  height: 24rpx;
+  background-color: #E8593E;
+  border-radius: 4rpx;
+  margin-right: 10rpx;
+}
+
+.legend-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 历史记录样式 */
+.history-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-list {
+  flex: 1;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.history-date {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+.history-value {
+  font-size: 28rpx;
+  color: #E8593E;
+  margin-right: 20rpx;
+}
+
+.history-time {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.no-data {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+} 

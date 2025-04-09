@@ -1,0 +1,86 @@
+<!--pages/settings/settings.wxml-->
+<navigation-bar title="设置" back="{{false}}" color="white" background="#E8593E"></navigation-bar>
+<view class="container {{darkMode ? 'dark-mode' : ''}}">
+  <view class="settings-section">
+    <view class="section-title">时间设置</view>
+    
+    <view class="setting-item">
+      <view class="setting-label">工作时长 (分钟)</view>
+      <view class="setting-control">
+        <slider min="1" max="60" value="{{workTime}}" show-value bindchange="onWorkTimeChange" activeColor="#E8593E" block-color="#E8593E"/>
+      </view>
+    </view>
+    
+    <view class="setting-item">
+      <view class="setting-label">短休息时长 (分钟)</view>
+      <view class="setting-control">
+        <slider min="1" max="30" value="{{shortBreakTime}}" show-value bindchange="onShortBreakTimeChange" activeColor="#E8593E" block-color="#E8593E"/>
+      </view>
+    </view>
+    
+    <view class="setting-item">
+      <view class="setting-label">长休息时长 (分钟)</view>
+      <view class="setting-control">
+        <slider min="5" max="60" value="{{longBreakTime}}" show-value bindchange="onLongBreakTimeChange" activeColor="#E8593E" block-color="#E8593E"/>
+      </view>
+    </view>
+  </view>
+  
+  <view class="settings-section">
+    <view class="section-title">通知设置</view>
+    
+    <view class="setting-item switch-item">
+      <view class="setting-label">声音提醒</view>
+      <view class="setting-control">
+        <switch checked="{{soundEnabled}}" bindchange="toggleSound" color="#E8593E"/>
+      </view>
+    </view>
+    
+    <view class="setting-item switch-item">
+      <view class="setting-label">震动提醒</view>
+      <view class="setting-control">
+        <switch checked="{{vibrationEnabled}}" bindchange="toggleVibration" color="#E8593E"/>
+      </view>
+    </view>
+  </view>
+  
+  <view class="settings-section">
+    <view class="section-title">外观设置</view>
+    
+    <view class="setting-item switch-item">
+      <view class="setting-label">深色模式</view>
+      <view class="setting-control">
+        <switch checked="{{darkMode}}" bindchange="toggleDarkMode" color="#E8593E"/>
+      </view>
+    </view>
+  </view>
+  
+  <view class="settings-section">
+    <view class="section-title">数据管理</view>
+    
+    <view class="button-item" bindtap="showResetConfirmDialog">
+      <button class="reset-button">重置所有数据</button>
+    </view>
+  </view>
+  
+  <view class="settings-section">
+    <view class="button-item" bindtap="navigateToAbout">
+      <button class="about-button">关于番茄时钟</button>
+    </view>
+  </view>
+  
+  <!-- 重置确认对话框 -->
+  <view class="reset-confirm {{showResetConfirm ? 'show' : ''}}">
+    <view class="reset-confirm-content">
+      <view class="reset-confirm-title">确认重置</view>
+      <view class="reset-confirm-text">这将清除所有数据，包括任务和统计信息，确定要继续吗？</view>
+      <view class="reset-confirm-buttons">
+        <button class="cancel-btn" bindtap="hideResetConfirmDialog">取消</button>
+        <button class="confirm-btn" bindtap="resetAllData">确认重置</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 遮罩层 -->
+  <view class="mask {{showResetConfirm ? 'show' : ''}}" bindtap="hideResetConfirmDialog"></view>
+</view>

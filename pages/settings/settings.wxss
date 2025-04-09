@@ -1,0 +1,352 @@
+/* pages/settings/settings.wxss */
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #F8F8F8;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx;
+}
+
+/* 深色模式样式 */
+.dark-mode {
+  background-color: #222;
+  color: #EEE;
+}
+
+.dark-mode .settings-section {
+  background-color: #333;
+}
+
+.dark-mode .section-title {
+  color: #DDD;
+}
+
+.dark-mode .setting-label {
+  color: #CCC;
+}
+
+/* 设置区块样式 */
+.settings-section {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+/* 设置项样式 */
+.setting-item {
+  margin-bottom: 40rpx;
+}
+
+.setting-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.setting-control {
+  width: 100%;
+}
+
+/* 开关项目样式 */
+.switch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.switch-item .setting-label {
+  margin-bottom: 0;
+}
+
+.switch-item .setting-control {
+  width: auto;
+}
+
+/* 按钮项目样式 */
+.button-item {
+  padding: 10rpx 0;
+}
+
+.reset-button {
+  background-color: #FF5252;
+  color: #FFFFFF;
+}
+
+.about-button {
+  background-color: #E8593E;
+  color: #FFFFFF;
+}
+
+/* 重置确认对话框样式 */
+.reset-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+}
+
+.reset-confirm.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.reset-confirm-content {
+  width: 80%;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
+
+.reset-confirm-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.reset-confirm-text {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.reset-confirm-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-btn, .confirm-btn {
+  width: 45%;
+  padding: 20rpx 0;
+  text-align: center;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+}
+
+.cancel-btn {
+  background-color: #F5F5F5;
+  color: #666;
+}
+
+.confirm-btn {
+  background-color: #FF5252;
+  color: #FFFFFF;
+}
+
+/* 遮罩层 */
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+}
+
+.mask.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 深色模式样式 */
+.dark-mode {
+  background-color: #222;
+  color: #EEE;
+}
+
+.dark-mode .settings-section {
+  background-color: #333;
+}
+
+.dark-mode .section-title {
+  color: #DDD;
+}
+
+.dark-mode .setting-label {
+  color: #CCC;
+}
+
+/* 设置区块样式 */
+.settings-section {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+/* 设置项样式 */
+.setting-item {
+  margin-bottom: 40rpx;
+}
+
+.setting-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.setting-control {
+  width: 100%;
+}
+
+/* 开关项目样式 */
+.switch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.switch-item .setting-label {
+  margin-bottom: 0;
+}
+
+.switch-item .setting-control {
+  width: auto;
+}
+
+/* 按钮项目样式 */
+.button-item {
+  padding: 10rpx 0;
+}
+
+.reset-button {
+  background-color: #FF5252;
+  color: #FFFFFF;
+}
+
+.about-button {
+  background-color: #E8593E;
+  color: #FFFFFF;
+}
+
+/* 重置确认对话框样式 */
+.reset-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+}
+
+.reset-confirm.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.reset-confirm-content {
+  width: 80%;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
+
+.reset-confirm-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.reset-confirm-text {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.reset-confirm-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-btn, .confirm-btn {
+  width: 45%;
+  padding: 20rpx 0;
+  text-align: center;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+}
+
+.cancel-btn {
+  background-color: #F5F5F5;
+  color: #666;
+}
+
+.confirm-btn {
+  background-color: #FF5252;
+  color: #FFFFFF;
+}
+
+/* 遮罩层 */
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+}
+
+.mask.show {
+  opacity: 1;
+  visibility: visible;
+} 
