@@ -49,16 +49,40 @@ Component({
     switchTab(e) {
       const data = e.currentTarget.dataset;
       const url = data.path;
+      const index = data.index;
       
       // 立即更新选中状态
       this.setData({
-        selected: data.index
+        selected: index
       });
       
+      console.log('Switching to tab:', url, 'index:', index);
+      
       // 切换到相应页面
-      wx.switchTab({
-        url
-      });
+      try {
+        wx.switchTab({
+          url,
+          fail: (err) => {
+            console.error('Failed to switch tab:', err);
+            // 尝试使用navigateTo作为备选方案
+            wx.navigateTo({
+              url,
+              fail: (navigateErr) => {
+                console.error('Failed to navigate:', navigateErr);
+                // 最后尝试使用重定向
+                wx.redirectTo({
+                  url,
+                  fail: (redirectErr) => {
+                    console.error('Failed to redirect:', redirectErr);
+                  }
+                });
+              }
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Error during tab switching:', error);
+      }
     }
   }
 }) 
